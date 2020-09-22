@@ -1,0 +1,3 @@
+[submodule "fbtft-dt-overlay"]
+	path = fbtft-dt-overlay
+	url = https://github.com/nuharaf/fbtft-dt-overlay
