@@ -25,7 +25,7 @@
 		target = <&pio>;
 		__overlay__ {
 			opiz_display_pins: opiz_display_pins {
-                pins = "PA6", "PG7";
+                pins = "PA6", "PG7", "PA19";
                 function = "gpio_out";
 			};
 		};
@@ -51,6 +51,7 @@
 				buswidth = <8>;
 				reset-gpios = <&pio 0 6 1>;
 				dc-gpios = <&pio 6 7 0>;
+                led-gpios = <&pio 0 19 1>;
 			};
 		};
 	};
