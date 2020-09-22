@@ -24,14 +24,33 @@
 	fragment@1 {
 		target = <&pio>;
 		__overlay__ {
-			opiz_display_pins: opiz_display_pins {
-                pins = "PA6", "PG7", "PA19";
+			fbtft_pins: fbtft_pins {
+                pins = "PA6", "PG7";
                 function = "gpio_out";
+			};
+			fbtft_backlight: fbtft_backlight {
+				pins = "PA19";
+				function = "gpio_out";
+				output-high;
 			};
 		};
 	};
 
 	fragment@2 {
+		target-path = "/";
+		__overlay__ {
+            leds {
+                compatible = "gpio-leds";
+
+                fbtft_backlight {
+                    label = "fbtft_backlight";
+                    gpios =  <&pio 0 19 0>; // port A=0 pin0=0 output=0
+                    default-state = "on";
+                };
+            };
+		};
+	};
+	fragment@4 {
 		target = <&spi1>;
 		__overlay__ {
 			/* needed to avoid dtc warning */
@@ -42,7 +61,7 @@
 				compatible = "sitronix,st7735r";
 				reg = <0>;
 				pinctrl-names = "default";
-				pinctrl-0 = <&opiz_display_pins>;
+				pinctrl-0 = <&fbtft_pins>;
 
 				spi-max-frequency = <32000000>;
 				rotate = <90>;
@@ -51,7 +70,6 @@
 				buswidth = <8>;
 				reset-gpios = <&pio 0 6 1>;
 				dc-gpios = <&pio 6 7 0>;
-                led-gpios = <&pio 0 19 0>;
 			};
 		};
 	};
