@@ -25,11 +25,16 @@
 		target = <&pio>;
 		__overlay__ {
 			fbtft_pins: fbtft_pins {
-                pins = "PA6", "PG7";
-                function = "gpio_out";
+		                pins = "PG7", "PA6";
+                		function = "gpio_out";
 			};
 			fbtft_backlight: fbtft_backlight {
 				pins = "PA19";
+				function = "gpio_out";
+				output-high;
+			};
+			nrfcsn: nrfcsn {
+				pins = "PG6";
 				function = "gpio_out";
 				output-high;
 			};
@@ -44,7 +49,7 @@
 
                 fbtft_backlight {
                     label = "fbtft_backlight";
-                    gpios =  <&pio 0 19 1>; // port A=0 pin0=0 output=0
+                    gpios =  <&pio 0 19 0>; // port A=0 pin=19 output=0
                     default-state = "on";
                 };
             };
@@ -64,10 +69,11 @@
 				pinctrl-0 = <&fbtft_pins>;
 
 				spi-max-frequency = <32000000>;
-				rotate = <90>;
+				rotate = <0>;
 				bgr;
 				fps = <60>;
 				buswidth = <8>;
+				height = <128>;
 				reset-gpios = <&pio 0 6 1>;
 				dc-gpios = <&pio 6 7 0>;
 			};
