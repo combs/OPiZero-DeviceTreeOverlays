@@ -1,0 +1,82 @@
+// https://github.com/nuharaf/fbtft-dt-overlay
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "allwinner,sun8i-h3";
+
+	fragment@0 {
+		target = <&spi1>;
+		__overlay__ {
+			status = "okay";
+
+			spidev@0{
+				status = "disabled";
+			};
+
+			spidev@1{
+				status = "disabled";
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&pio>;
+		__overlay__ {
+			fbtft_pins: fbtft_pins {
+		                pins = "PG7", "PA6";
+                		function = "gpio_out";
+			};
+			fbtft_backlight: fbtft_backlight {
+				pins = "PA19";
+				function = "gpio_out";
+				output-high;
+			};
+			nrfcsn: nrfcsn {
+				pins = "PG6";
+				function = "gpio_out";
+				output-high;
+			};
+		};
+	};
+
+	fragment@2 {
+		target-path = "/";
+		__overlay__ {
+            leds {
+                compatible = "gpio-leds";
+
+                fbtft_backlight {
+                    label = "fbtft_backlight";
+                    gpios =  <&pio 0 19 0>; // port A=0 pin=19 output=0
+                    default-state = "on";
+                };
+            };
+		};
+	};
+	fragment@4 {
+		target = <&spi1>;
+		__overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			opizdisplay: opiz-display@0{
+				compatible = "fbtft,adafruit18";
+				reg = <0>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&fbtft_pins>;
+
+				spi-max-frequency = <32000000>;
+				rotate = <0>;
+				bgr;
+				fps = <60>;
+				buswidth = <8>;
+				height = <128>;
+				reset-gpios = <&pio 0 6 1>;
+				dc-gpios = <&pio 6 7 0>;
+			};
+		};
+	};
+};
