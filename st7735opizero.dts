@@ -44,7 +44,7 @@
 
                 fbtft_backlight {
                     label = "fbtft_backlight";
-                    gpios =  <&pio 0 19 0>; // port A=0 pin0=0 output=0
+                    gpios =  <&pio 0 19 1>; // port A=0 pin0=0 output=0
                     default-state = "on";
                 };
             };
