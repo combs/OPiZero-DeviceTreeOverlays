@@ -1,0 +1,36 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "allwinner,sun8i-h2-plus";
+
+	/*
+	 * This fragment is needed only for the internal pull-up activation,
+	 * external pull-up resistor is highly recommended if using long wires
+	 */
+	fragment@0 {
+		target = <&pio>;
+		__overlay__ {
+			fan_0: fan_0 {
+				pins = "PA00";
+				function = "gpio_out";
+				output-high;
+			};
+		};
+	};
+
+	fragment@1 {
+		target-path = "/";
+		__overlay__ {
+            leds {
+                compatible = "gpio-leds";
+
+                fan_0 {
+                    label = "fan_0";
+                    gpios =  <&pio 0 0 0>; // port A=0 pin0=0 output=0
+                    default-state = "on";
+                };
+            };
+		};
+	};
+};

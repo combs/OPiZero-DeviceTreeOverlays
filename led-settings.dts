@@ -1,0 +1,18 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "allwinner,sun8i-h2-plus";
+	fragment@0 {
+		target-path = "/leds/";
+		__overlay__ {
+            pwr_led {
+                linux,default-trigger = "heartbeat";
+            };
+
+            status_led {
+                linux,default-trigger = "mmc0";
+            };
+		};
+	};
+};

@@ -1,0 +1,30 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "allwinner,sun8i-h2-plus";
+	fragment@0 {
+		target-path = "/soc/";
+		__overlay__ {
+
+            i2c@1c2ac00 {
+                compatible = "allwinner,sun6i-a31-i2c";
+                clock-frequency = <6000000>; /* i2c bus frequency 6 MHz */
+
+            };
+
+            i2c@1c2b000 {
+                compatible = "allwinner,sun6i-a31-i2c";
+                clock-frequency = <6000000>; /* i2c bus frequency 6 MHz */
+
+            };
+
+            i2c@1c2b400 {
+                compatible = "allwinner,sun6i-a31-i2c";
+                clock-frequency = <6000000>; /* i2c bus frequency 6 MHz */
+
+            };
+
+		};
+	};
+};
