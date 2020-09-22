@@ -8,7 +8,7 @@
 		target = <&pio>;
 		__overlay__ {
 			dallas_w1_pins: dallas_w1_pins {
-				pins = "PA01";
+				pins = "PA1";
 				function = "gpio_in";
 				bias-pull-up;
 			};
